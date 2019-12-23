@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: spring-cloud-eureka-server # 应用服务名
+  profiles:
+    active: peer3
+
+---
+spring:
+  profiles: default
+server:
+  port: 8761
+eureka:
+  client:
+    register-with-eureka: false # 表示是否将自己注册入eureka server中心，默认true
+    fetch-registry: false # 表示是否从eureka server 注册中心获取注册信息，默认true
+    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。
+    #默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+  instance:
+    hostname: eureka-server
+
+---
+spring:
+  profiles: peer1
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: peer1
+  client:
+    register-with-eureka: true # 表示是否将自己注册入eureka server中心，默认true
+    fetch-registry: true # 表示是否从eureka server 注册中心获取注册信息，默认true
+    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。
+    #默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+    #这里需要加入其他注册中心的地址以达到集群目的
+    serviceUrl:
+      defaultZone: http://peer2:8762/eureka,http://peer3:8763/eureka
+
+---
+spring:
+  profiles: peer2
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: peer2
+  client:
+    register-with-eureka: true # 表示是否将自己注册入eureka server中心，默认true
+    fetch-registry: true # 表示是否从eureka server 注册中心获取注册信息，默认true
+    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。
+    #默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+    #这里需要加入其他注册中心的地址以达到集群目的
+    serviceUrl:
+      defaultZone: http://peer1:8761/eureka,http://peer3:8763/eureka
+
+---
+spring:
+  profiles: peer3
+server:
+  port: 8763
+eureka:
+  instance:
+    hostname: peer3
+  client:
+    register-with-eureka: true # 表示是否将自己注册入eureka server中心，默认true
+    fetch-registry: true # 表示是否从eureka server 注册中心获取注册信息，默认true
+    #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。
+    #默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+    #这里需要加入其他注册中心的地址以达到集群目的
+    serviceUrl:
+      defaultZone: http://peer1:8761/eureka,http://peer2:8762/eureka
+
