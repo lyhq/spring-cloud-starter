@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: eureka-producer
+eureka:
+  instance:
+    prefer-ip-address: true #启用ip配置 这样在注册中心列表中看见的是以ip+端口呈现的
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/ #与注册中心的交互地址
+server:
+  port: 7001 #配置两个server端实验负载均衡，第一个8000，第二个8001
+
+config:
+  producer:
+    instance: 1 #这里跟随端口号配套修改，测试负载均衡

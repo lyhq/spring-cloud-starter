@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: eureka-consumer-feign
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/ #\u6CE8\u518C\u4E2D\u5FC3\u5730\u5740
+server:
+  port: 9002
