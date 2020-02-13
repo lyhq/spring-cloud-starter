@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: turbine-stream-rabbitmq
+  rabbitmq: # rabbitmq的连接信息
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+server:
+  port: 8080 # turbine-stream的默认端口号
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+
